@@ -1,23 +1,25 @@
-var logger = require('log4js').getLogger('normal');
-var util = require('../util');
+import log4js from 'log4js'
+import MongoPool from './mongo-pool'
 
-var manager = {};
+export default {
+    getTopicDetailById(id, orderBy = 'desc', pageNo = 1, pageSize = 20) {
+        let dfd = Q.defer();
+        let db = await MongoPool.getInstance();
 
-var use = function(target, props) {
-    for(var prop in props) {
-        if(props.hasOwnProperty(prop)) {
-            target[prop] = props[prop];
-        }
-    }
-};
+        db.collection('detail').find({ id: id })
+            .toArray((e, o) => {
+                if (e) {
+                    dfd.reject('error');
+                } else {
+                    dfd.resolve(o);
+                }
+            });
 
-// 账号管理
-use(manager, require('./accountManager')('accounts'));
-// 权限管理
-use(manager, require('./roleManager')('roles'));
-// 活动管理
-use(manager, require('./activityManager')('activity'));
-// 社团管理
-use(manager, require('./associationManager')('association'));
+        return dfd.promise;
+    },
 
-module.exports = manager;
+    getTopicList(orderBy = 'desc', pageNo = 1, pageSize = 20) {
+        let dfd = Q.defer();
+        let db = await MongoPool.getInstance();
+    },
+}

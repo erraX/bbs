@@ -1,17 +1,20 @@
-module.exports = {
-    getObjectId: function(id) {
-        return new require('mongodb').ObjectID(id);
+import Mongodb from 'mongodb'
+import MongoPool from './mongo-pool'
+
+export default {
+    getObjectId(id) {
+        return new Mongodb.ObjectID(id);
     },
 
-    convertId: function(o) {
-        for (var key in o) {
+    convertId(o) {
+        for (let key in o) {
             o[key]['_id'] = this.getObjectId(o[key]['_id']) + '';
         }
         return o;
     },
 
-    inList: function(id, list) {
-        for (var i = 0; i < list.length; i++) {
+    inList(id, list) {
+        for (let i = 0; i < list.length; i++) {
             if (id == this.getObjectId(list[i]._id)) {
                 return true;
             }
