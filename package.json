@@ -1,0 +1,54 @@
+{
+  "name": "bbs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/erraX/bbs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/erraX/bbs/issues"
+  },
+  "homepage": "https://github.com/erraX/bbs#readme",
+  "dependencies": {
+    "connect": "^3.4.1",
+    "connect-domain": "^0.5.0",
+    "css-loader": "^0.22.0",
+    "express": "^4.13.3",
+    "express-domain-middleware": "^0.1.0",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "lodash": "^4.0.0",
+    "log4js": "^0.6.27",
+    "q": "^1.4.1",
+    "style-loader": "^0.13.0",
+    "swig": "^1.4.2",
+    "webpack": "^1.12.3",
+    "webpack-dev-middleware": "^1.2.0",
+    "webpack-hot-middleware": "^2.4.1",
+    "webpack-spritesmith": "0.0.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.1.2",
+    "babel-loader": "^6.0.1",
+    "babel-preset-es2015": "^6.1.2",
+    "babel-preset-stage-0": "^6.3.13",
+    "body-parser": "^1.14.2",
+    "connect-mongo": "^0.8.2",
+    "cookie-parser": "^1.4.0",
+    "crypto": "0.0.3",
+    "errorhandler": "^1.4.2",
+    "express-session": "^1.12.1",
+    "moment": "^2.11.1",
+    "mongodb": "^2.1.3",
+    "node-sass": "^3.4.2",
+    "sass-loader": "^3.1.2",
+    "uglify-loader": "^1.3.0",
+    "webpack": "^1.12.12"
+  }
+}
