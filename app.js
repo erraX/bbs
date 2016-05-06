@@ -5,14 +5,14 @@ import path from 'path'
 import swig from 'swig'
 import log4js from 'log4js'
 import http from 'http'
-import session from 'express-session'
 import errorHandler from 'errorhandler'
 import cookieParser from 'cookie-parser'
 import ConnectMongo from 'connect-mongo'
-import webpack from 'webpack';
+import webpack from 'webpack'
+
+import indexRoute from './routes/index'
 
 let app = express();
-let MongoStore = ConnectMongo(session);
 
 // 前端文件目录
 app.use(express.static(__dirname + '/public'));
@@ -22,16 +22,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(errorHandler());
-
-app.use(session({
-        secret: 'faeb4453e5d14fe6f6d04637f78077c76c73d1b4',
-        proxy: true,
-        resave: true,
-        cookie: { maxAge:900000 },
-        saveUninitialized: true,
-        store: new MongoStore({ host: 'localhost', port: 27017, db: 'erji'})
-	})
-);
 
 // 模板引擎
 // ===============
@@ -76,7 +66,7 @@ logger.setLevel('DEBUG');
 
 // 路由配置
 // ===============
-// app.use('/', require('./routes/index'));
+app.use('/', indexRoute);
 
 // 异常处理
 // ===============

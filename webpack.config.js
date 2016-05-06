@@ -14,7 +14,7 @@ module.exports = {
     // <script src="/index.js"></script>
     // 即可
     entry: {
-        index: ['./public/js/index/entry.js', hotMiddlewareScript],
+        index: ['./public/js/index.js', hotMiddlewareScript],
     },
     output: {
         path: __dirname,

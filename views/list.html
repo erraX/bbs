@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>耳机大家坛</title>
+</head>
+<body>
+  <div id="main">
+    <ul>
+      {% for item in topics %}
+        <li>
+          <a href="/topic/{{ item.id }}">{{ item.topic }}</a>
+          <span>{{ item.lastUpdateTime }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</body>
+</html>

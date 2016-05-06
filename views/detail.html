@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>耳机大家坛</title>
+</head>
+<body>
+  <div id="main">
+    <ul>
+      {% for item in content %}
+        <li>
+          <span>{{ item.name }}</span>
+          <span>{{ item.postedTime | date('Y-m-d h:m') }}</span>
+          <span>{{ item.floor }}</span>
+          <div>{{ item.content | raw }}</div>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</body>
+</html>
