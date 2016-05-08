@@ -68,39 +68,43 @@ logger.setLevel('DEBUG');
 // ===============
 app.use('/', indexRoute);
 
+process.on('uncaughtException', function (err) {
+  console.log(err);
+})
+
 // 异常处理
 // ===============
 
 // Catch 404
-app.use(function(req, res, next) {
-    var err = new Error('Not Found, url:' + req.originalUrl);
-    err.status = 404;
-    next(err);
-});
+// app.use(function(req, res, next) {
+//     let err = new Error('Not Found, url:' + req.originalUrl);
+//     err.status = 404;
+//     next(err);
+// });
 
 // log error
-app.use(function(err, req, res, next) {
-    var logMsg = err.stack || err;
-    if (err.status && err.status === 404) {
-        logger.warn(logMsg);
-    } else {
-        logger.fatal(logMsg);
-    }
-    next(err);
-});
+// app.use(function(err, req, res, next) {
+//     let logMsg = err.stack || err;
+//     if (err.status && err.status === 404) {
+//         logger.warn(logMsg);
+//     } else {
+//         logger.fatal(logMsg);
+//     }
+//     next(err);
+// });
 
 // render error
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        status: err.status,
-    });
-});
+// app.use(function(err, req, res, next) {
+//     res.status(err.status || 500);
+//     res.render('error', {
+//         status: err.status,
+//     });
+// });
 
 // 启动服务
 // ===============
-var server = app.listen(8888, function () {
-    var host = server.address().address;
-    var port = server.address().port;
+let server = app.listen(8888, function () {
+    const host = server.address().address;
+    const port = server.address().port;
     logger.info('Young app listening at http://%s:%s', host, port);
 });

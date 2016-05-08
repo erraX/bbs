@@ -1,9 +1,13 @@
 import log4js from 'log4js'
 import MongoPool from './mongo-pool'
 import Q from 'q'
+import timeConverter from './TimeConverter'
+import _ from 'lodash'
+
+const slice = Array.prototype.slice;
 
 async function searchData(colName, schema, order, page) {
-    console.log(colName, schema, order, page)
+    // console.log(colName, schema, order, page)
     let dfd = Q.defer();
     let db = await MongoPool.getInstance();
 
@@ -23,6 +27,12 @@ async function searchData(colName, schema, order, page) {
     return dfd.promise;
 }
 
+function convert(data, processor) {
+    let args = slice.call(arguments, 2);
+    _.each(data, (v, k) => timeConverter.apply(this, _.concat(v, args)));
+    return data;
+}
+
 export default {
     async getTopicDetailById(id, orderBy = 'desc', pageNo = 1, pageSize = 1000) {
         let data = await searchData(
@@ -31,6 +41,8 @@ export default {
             { floor: orderBy === 'desc' ? -1 : 1 },
             { pageNo, pageSize, }
         );
+
+        convert(data, timeConverter, 'postedTime');
 
         return data;
     },
@@ -42,6 +54,8 @@ export default {
             { lastUpdateTime: orderBy === 'desc' ? -1 : 1 },
             { pageNo, pageSize, }
         );
+
+        convert(data, timeConverter, 'lastUpdateTime');
 
         return data;
     },
