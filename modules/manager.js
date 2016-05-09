@@ -48,13 +48,13 @@ export default {
     },
 
     async getTopicList(orderBy = 'desc', pageNo = 1, pageSize = 1000) {
-        let data = await searchData(
+        let data;
+        data = await searchData(
             'topic',
             {},
             { lastUpdateTime: orderBy === 'desc' ? -1 : 1 },
             { pageNo, pageSize, }
         );
-
         convert(data, timeConverter, 'lastUpdateTime');
 
         return data;

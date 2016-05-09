@@ -64,42 +64,42 @@ let logger = log4js.getLogger('normal');
 // logger.setLevel('INFO');
 logger.setLevel('DEBUG');
 
+// process.on('uncaughtException', function (err) {
+//   console.log(err);
+// });
+
 // 路由配置
 // ===============
 app.use('/', indexRoute);
-
-process.on('uncaughtException', function (err) {
-  console.log(err);
-})
 
 // 异常处理
 // ===============
 
 // Catch 404
-// app.use(function(req, res, next) {
-//     let err = new Error('Not Found, url:' + req.originalUrl);
-//     err.status = 404;
-//     next(err);
-// });
+app.use(function(req, res, next) {
+    let err = new Error('Not Found, url:' + req.originalUrl);
+    err.status = 404;
+    next(err);
+});
 
 // log error
-// app.use(function(err, req, res, next) {
-//     let logMsg = err.stack || err;
-//     if (err.status && err.status === 404) {
-//         logger.warn(logMsg);
-//     } else {
-//         logger.fatal(logMsg);
-//     }
-//     next(err);
-// });
+app.use(function(err, req, res, next) {
+    let logMsg = err.stack || err;
+    if (err.status && err.status === 404) {
+        logger.warn(logMsg);
+    } else {
+        logger.fatal(logMsg);
+    }
+    next(err);
+});
 
 // render error
-// app.use(function(err, req, res, next) {
-//     res.status(err.status || 500);
-//     res.render('error', {
-//         status: err.status,
-//     });
-// });
+app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+        status: err.status,
+    });
+});
 
 // 启动服务
 // ===============
