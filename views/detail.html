@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <title>耳机大家坛</title>
+  <link rel="stylesheet" href="/css/index.css">
 </head>
 <body>
   <div id="main">
@@ -11,7 +13,11 @@
         <li>
           <span>{{ item.name }}</span>
           <span>{{ item.postedTime }}</span>
-          <span>{{ item.floor }}</span>
+          {% if item.floor === 0 %}
+            <span>楼主</span>
+          {% else %}
+            <span>{{ item.floor }}楼</span>
+          {% endif %}
           <div>{{ item.content | raw }}</div>
         </li>
       {% endfor %}
