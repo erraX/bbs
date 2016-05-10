@@ -63,6 +63,7 @@ li {
 .topic .answer {
     width: 24px;
     text-align: center;
+    vertical-align: middle;
     padding: 0 2px;
     height: 18px;
     border-radius: 10px;
@@ -70,8 +71,17 @@ li {
     color: #fff;
     font-size: 11px;
     position: absolute;
-    top: 20px;
+    top: 25px;
     right: 0;
+}
+
+.topic .answer b {
+    font-weight: 400;
+    position: relative;
+    top: 1px;
+    left: 0;
+    width: 20px;
+    overflow: hidden;
 }
 
 .topic .title {
