@@ -8,17 +8,21 @@
 </head>
 <body>
   <div id="main">
+    <p class="title">{{ title }}</p>
     <ul>
       {% for item in content %}
-        <li>
-          <span>{{ item.name }}</span>
-          <span>{{ item.postedTime }}</span>
-          {% if item.floor === 0 %}
-            <span>楼主</span>
-          {% else %}
-            <span>{{ item.floor }}楼</span>
-          {% endif %}
-          <div>{{ item.content | raw }}</div>
+        <li class="entry">
+          <div class="info">
+            <span class="author">{{ item.name }}</span>
+            <span class="time">{{ item.postedTime }}</span>
+            {% if item.floor === 0 %}
+              <span class="floor">楼主</span>
+            {% else %}
+              <span class="floor">{{ item.floor }}楼</span>
+            {% endif %}
+          </div>
+
+          <div class="content">{{ item.content | raw }}</div>
         </li>
       {% endfor %}
     </ul>

@@ -48,8 +48,7 @@ export default {
     },
 
     async getTopicList(orderBy = 'desc', pageNo = 1, pageSize = 1000) {
-        let data;
-        data = await searchData(
+        let data = await searchData(
             'topic',
             {},
             { lastUpdateTime: orderBy === 'desc' ? -1 : 1 },
@@ -58,5 +57,21 @@ export default {
         convert(data, timeConverter, 'lastUpdateTime');
 
         return data;
+    },
+
+    async getTitleById(id) {
+        let dfd = Q.defer();
+        let db = await MongoPool.getInstance();
+
+        db.collection('topic')
+            .findOne({id: id}, (e, o) => {
+                if (e) {
+                    dfd.reject('error');
+                } else {
+                    dfd.resolve(o.topic);
+                }
+            });
+
+        return dfd.promise;
     },
 }

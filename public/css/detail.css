@@ -19,3 +19,25 @@ ul {
 li {
   list-style: none;
 }
+
+.title {
+  margin: 10px 0;
+  font-weight: 500;
+  font-size: 20px;
+}
+
+.info {
+  color: #ccc;
+}
+
+.entry .time {
+
+}
+
+.entry .floor {
+}
+
+
+.entry .content {
+  font-size: 13px !important;
+}

@@ -16,15 +16,20 @@ index.get('/', async (req, res, next) => {
 });
 
 index.get('/topic/:tid', async (req, res, next) => {
-    let tid = req.params.tid
     let data;
+    let title;
+    let tid = req.params.tid
     try {
         data = await manager.getTopicDetailById(tid, 'asc');
+        title = await manager.getTitleById(tid);
     } catch (e) {
         next(e);
     }
 
-    res.render('detail', {content: data});
+    res.render('detail', {
+        content: data,
+        title: title,
+    });
 });
 
 export default index;
