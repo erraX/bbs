@@ -57,7 +57,10 @@ li {
   font-size: 14px;
   word-break: break-all;
   overflow: hidden;
-  
+}
+
+.content img {
+    width: 100%;
 }
 
 .content blockquote {
