@@ -33,16 +33,16 @@ swig.setDefaults({ cache: false });
 
 // Webpack中间件
 // ===============
-let webpackConfig = require(process.env.WEBPACK_CONFIG ? process.env.WEBPACK_CONFIG : './webpack.config');
-let compiler = webpack(webpackConfig);
-
-app.use(require('webpack-dev-middleware')(compiler, {
-  noInfo: true, publicPath: webpackConfig.output.publicPath
-}));
-
-app.use(require('webpack-hot-middleware')(compiler, {
-  log: console.log, path: '/__webpack_hmr', heartbeat: 10 * 1000
-}));
+// let webpackConfig = require(process.env.WEBPACK_CONFIG ? process.env.WEBPACK_CONFIG : './webpack.config');
+// let compiler = webpack(webpackConfig);
+//
+// app.use(require('webpack-dev-middleware')(compiler, {
+//   noInfo: true, publicPath: webpackConfig.output.publicPath
+// }));
+//
+// app.use(require('webpack-hot-middleware')(compiler, {
+//   log: console.log, path: '/__webpack_hmr', heartbeat: 10 * 1000
+// }));
 
 // log4j配置
 // ===============

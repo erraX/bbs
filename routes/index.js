@@ -1,10 +1,14 @@
+import log4js from 'log4js'
 import express from 'express'
 import manager from '../modules/manager'
 import m from 'moment'
 
+const logger = log4js.getLogger('normal');
+
 let index = express.Router();
 
 index.get('/', async (req, res, next) => {
+    logger.info('Get index');
     let data;
     try {
         data = await manager.getTopicList();
@@ -19,6 +23,7 @@ index.get('/topic/:tid', async (req, res, next) => {
     let data;
     let title;
     let tid = req.params.tid
+    logger.info('Get detail', tid);
     try {
         data = await manager.getTopicDetailById(tid, 'asc');
         title = await manager.getTitleById(tid);
