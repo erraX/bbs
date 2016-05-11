@@ -19,6 +19,10 @@ li {
   list-style: none;
 }
 
+#main {
+    padding: 20px;
+}
+
 .title {
   margin: 10px 0;
   font-weight: 500;
@@ -26,7 +30,19 @@ li {
 }
 
 .info {
-  color: #ccc;
+    color: #505050;
+    font-size: 12px;
+    padding-left: 10px;
+    border-left: 2px solid #E85B5B;
+    line-height: 12px;
+    margin-bottom: 10px;
+}
+
+.entry {
+    margin: 10px 0;
+    border: 1px solid #EAEAEA;
+    border-radius: 5px;
+    padding: 10px;
 }
 
 .entry .time {
@@ -38,5 +54,10 @@ li {
 
 
 .entry .content {
-  font-size: 13px !important;
+  font-size: 14px;
+}
+
+.content blockquote {
+    padding: 10px;
+    border: 1px dashed #CCC;
 }
