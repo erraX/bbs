@@ -55,6 +55,9 @@ li {
 
 .entry .content {
   font-size: 14px;
+  word-break: break-all;
+  overflow: hidden;
+  
 }
 
 .content blockquote {

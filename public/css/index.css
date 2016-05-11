@@ -76,11 +76,12 @@ li {
 }
 
 .topic .answer b {
+    display: inline-block;
     font-weight: 400;
     position: relative;
     top: 1px;
     left: 0;
-    width: 20px;
+    width: 21px;
     overflow: hidden;
 }
 
