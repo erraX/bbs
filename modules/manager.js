@@ -34,7 +34,7 @@ function convert(data, processor) {
 }
 
 export default {
-    async getTopicDetailById(id, orderBy = 'desc', pageNo = 1, pageSize = 1000) {
+    async getTopicDetailById(id, orderBy = 'desc', pageNo = 1, pageSize = 20) {
         let data = await searchData(
             'detail',
             { id: id },
@@ -47,7 +47,7 @@ export default {
         return data;
     },
 
-    async getTopicList(orderBy = 'desc', pageNo = 1, pageSize = 1000) {
+    async getTopicList(orderBy = 'desc', pageNo = 1, pageSize = 20) {
         let data = await searchData(
             'topic',
             {},
