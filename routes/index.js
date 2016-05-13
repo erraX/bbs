@@ -8,32 +8,44 @@ const logger = log4js.getLogger('normal');
 let index = express.Router();
 
 index.get('/', async (req, res, next) => {
-    logger.info('Get index');
-    let data;
+    let topics;
+    let totalPage;
+    let pageNo = req.query.pageno || 1;
+
     try {
-        data = await manager.getTopicList();
+        topics = await manager.getTopicList('desc', parseInt(pageNo, 10));
+        totalPage = await manager.getTopicTotalPageNum();
     } catch (e) {
         next(e);
     }
 
-    res.render('list', {topics: data});
+    res.render('list', {
+        topics,
+        totalPage,
+        pageNo,
+    });
 });
 
 index.get('/topic/:tid', async (req, res, next) => {
-    let data;
+    let content;
     let title;
+    let totalPage;
     let tid = req.params.tid
-    logger.info('Get detail', tid);
+    let pageNo = req.query.pageno || 1;
+
     try {
-        data = await manager.getTopicDetailById(tid, 'asc');
+        content = await manager.getTopicDetailById(tid, 'asc', parseInt(pageNo, 10));
         title = await manager.getTitleById(tid);
+        totalPage = await manager.getDetailTotalPageNum(tid);
     } catch (e) {
         next(e);
     }
 
     res.render('detail', {
-        content: data,
-        title: title,
+        content,
+        title,
+        totalPage,
+        pageNo,
     });
 });
 

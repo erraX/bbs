@@ -1,14 +1,11 @@
 import express from 'express'
 import bodyParser from 'body-parser'
-import domainMiddleware from 'express-domain-middleware'
 import path from 'path'
 import swig from 'swig'
 import log4js from 'log4js'
 import http from 'http'
 import errorHandler from 'errorhandler'
-import cookieParser from 'cookie-parser'
 import ConnectMongo from 'connect-mongo'
-import webpack from 'webpack'
 
 import indexRoute from './routes/index'
 
@@ -20,7 +17,6 @@ app.use(express.static(__dirname + '/public'));
 // 中间件
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
 app.use(errorHandler());
 
 // 模板引擎
@@ -30,19 +26,6 @@ app.set('view cache', false);
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html', swig.renderFile);
 swig.setDefaults({ cache: false });
-
-// Webpack中间件
-// ===============
-// let webpackConfig = require(process.env.WEBPACK_CONFIG ? process.env.WEBPACK_CONFIG : './webpack.config');
-// let compiler = webpack(webpackConfig);
-//
-// app.use(require('webpack-dev-middleware')(compiler, {
-//   noInfo: true, publicPath: webpackConfig.output.publicPath
-// }));
-//
-// app.use(require('webpack-hot-middleware')(compiler, {
-//   log: console.log, path: '/__webpack_hmr', heartbeat: 10 * 1000
-// }));
 
 // log4j配置
 // ===============
@@ -64,9 +47,9 @@ let logger = log4js.getLogger('normal');
 // logger.setLevel('INFO');
 logger.setLevel('DEBUG');
 
-// process.on('uncaughtException', function (err) {
-//   console.log(err);
-// });
+process.on('uncaughtException', function (err) {
+  logger.error(err);
+});
 
 // 路由配置
 // ===============

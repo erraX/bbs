@@ -4,12 +4,19 @@ import Q from 'q'
 import timeConverter from './TimeConverter'
 import _ from 'lodash'
 
+const logger = log4js.getLogger('normal');
 const slice = Array.prototype.slice;
+const DEAULT_PAGE_SIZE = 40;
 
-async function searchData(colName, schema, order, page) {
-    // console.log(colName, schema, order, page)
+async function fetchList(colName, schema, order, page) {
+    let db;
     let dfd = Q.defer();
-    let db = await MongoPool.getInstance();
+
+    try {
+        db = await MongoPool.getInstance();
+    } catch (e) {
+        dfd.reject('db-error')
+    }
 
     db.collection(colName)
         .find(schema)
@@ -18,9 +25,33 @@ async function searchData(colName, schema, order, page) {
         .limit(page.pageSize)
         .toArray((e, o) => {
             if (e) {
-                dfd.reject('error');
+                dfd.reject('collection-error');
             } else {
                 dfd.resolve(o);
+            }
+        });
+
+    return dfd.promise;
+}
+
+async function fetchPage(colName, schema, pageSize) {
+    let db;
+    let dfd = Q.defer()
+
+    try {
+        db = await MongoPool.getInstance();
+    } catch (e) {
+        dfd.reject('db-error')
+    }
+
+    db.collection(colName)
+        .find(schema)
+        .toArray((e, o) => {
+            if (e) {
+                dfd.reject('collection-error');
+            } else {
+                // logger.debug(`Total: ${o.length}, TotalPage: ${Math.ceil(o.length / pageSize)}, Pagesize: ${pageSize}`);
+                dfd.resolve(Math.ceil(o.length / pageSize));
             }
         });
 
@@ -34,8 +65,18 @@ function convert(data, processor) {
 }
 
 export default {
-    async getTopicDetailById(id, orderBy = 'desc', pageNo = 1, pageSize = 20) {
-        let data = await searchData(
+    async getTopicTotalPageNum(pageSize = DEAULT_PAGE_SIZE) {
+        let totalPage = await fetchPage('topic', {}, pageSize);
+        return totalPage
+    },
+
+    async getDetailTotalPageNum(id, pageSize = DEAULT_PAGE_SIZE) {
+        let totalPage = await fetchPage('detail', {id}, pageSize);
+        return totalPage
+    },
+
+    async getTopicDetailById(id, orderBy = 'desc', pageNo = 1, pageSize = DEAULT_PAGE_SIZE) {
+        let data = await fetchList(
             'detail',
             { id: id },
             { floor: orderBy === 'desc' ? -1 : 1 },
@@ -47,8 +88,8 @@ export default {
         return data;
     },
 
-    async getTopicList(orderBy = 'desc', pageNo = 1, pageSize = 20) {
-        let data = await searchData(
+    async getTopicList(orderBy = 'desc', pageNo = 1, pageSize = DEAULT_PAGE_SIZE) {
+        let data = await fetchList(
             'topic',
             {},
             { lastUpdateTime: orderBy === 'desc' ? -1 : 1 },
@@ -60,8 +101,14 @@ export default {
     },
 
     async getTitleById(id) {
+        let db;
         let dfd = Q.defer();
-        let db = await MongoPool.getInstance();
+
+        try {
+            db = await MongoPool.getInstance();
+        } catch (e) {
+            dfd.reject('db-error')
+        }
 
         db.collection('topic')
             .findOne({id: id}, (e, o) => {
