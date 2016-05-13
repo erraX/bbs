@@ -6,15 +6,19 @@ import log4js from 'log4js'
 import http from 'http'
 import errorHandler from 'errorhandler'
 import ConnectMongo from 'connect-mongo'
+import compression from 'compression'
+import ReqLogger from './middlewares/ReqLogger'
 
 import indexRoute from './routes/index'
 
 let app = express();
 
+// gzip压缩
+app.use(compression());
 // 前端文件目录
 app.use(express.static(__dirname + '/public'));
-
 // 中间件
+app.use(ReqLogger);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(errorHandler());
@@ -42,7 +46,7 @@ log4js.configure({
   ]
 });
 
-let logger = log4js.getLogger('normal');
+const logger = log4js.getLogger('normal');
 
 // logger.setLevel('INFO');
 logger.setLevel('DEBUG');

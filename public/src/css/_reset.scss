@@ -1,0 +1,21 @@
+@import 'variables';
+
+html {
+    -webkit-tap-highlight-color: rgba(201, 224, 253, 0.3);
+}
+
+* {
+  font-family: $font-stack;
+}
+
+body,
+ul,
+h6,
+blockquote {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
