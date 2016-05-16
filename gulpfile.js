@@ -14,17 +14,6 @@ var gulp = require('gulp'),
 
 // Compile sass task
 gulp.task('sass', function() {
-    // return sass('public/src/css#<{(|.scss', {style: 'expanded'})
-    //             .pipe(autoprefixer('last 2 version'))
-    //             .pipe(cached())
-    //             // .pipe(concat('main.css'))
-    //             // .pipe(minifycss())
-    //             // .pipe(remember())
-    //             .pipe(gulp.dest('dist/css'))
-    //             // .pipe(livereload())
-    //             .pipe(notify({message: 'merge css successfully!'}));
-    //
-
     return gulp.src('public/src/css/**/*.scss')
               .pipe(sass({
                     includePaths: ['public/src/css']
@@ -49,23 +38,23 @@ gulp.task('babel', function() {
         'plugins': ['transform-es2015-modules-amd']
     }))
     .pipe(remember())
-    .pipe(livereload())
+    // .pipe(livereload())
     .pipe(gulp.dest('public/dist/js'));
 });
 
 // Watch task
 gulp.task('watch', function() {
     // livereload
-    livereload.listen();
+    // livereload.listen();
 
     // Watch .scss files change
-    gulp.watch('src/**/*.scss', ['sass']);
+    gulp.watch('public/src/**/*.scss', ['sass']);
 
     // Watch .js files change
-    gulp.watch('src/**/*.js', ['babel']);
+    gulp.watch('public/src/**/*.js', ['babel']);
 
     // Watch .tpl files change
-    gulp.watch('src/**/*.tpl', ['tpl']);
+    gulp.watch('public/src/**/*.tpl', ['tpl']);
 
 });
 

@@ -31,6 +31,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.engine('html', swig.renderFile);
 swig.setDefaults({ cache: false });
 
+// extend swig filter
+swig.setFilter('range', (x) => Array.apply(null, Array(x - 1)).map((_, i) => i + 1));
+
 // log4j配置
 // ===============
 log4js.configure({

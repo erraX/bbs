@@ -4,13 +4,12 @@ import manager from '../modules/manager'
 import m from 'moment'
 
 const logger = log4js.getLogger('normal');
-
 let index = express.Router();
 
 index.get('/', async (req, res, next) => {
     let topics;
     let totalPage;
-    let pageNo = req.query.pageno || 1;
+    let pageNo = req.query.page || 1;
 
     try {
         topics = await manager.getTopicList('desc', parseInt(pageNo, 10));
