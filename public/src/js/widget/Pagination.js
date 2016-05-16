@@ -17,7 +17,7 @@ export default class Pagination {
         this.$sel = this.$el.find('.page-selector');
 
         // 添加页码option
-        let options = _.map(util.range(this.totalPage), i => `<option value="${i}">${i}</option>`).join('');
+        const options = _.map(util.range(this.totalPage), i => `<option value="${i}">${i}</option>`).join('');
         this.$sel
             .append(options)
             .val(this.curPageNo);
@@ -29,10 +29,10 @@ export default class Pagination {
     }
 
     redirect(pageNo) {
-        console.info(`redirect to page: ${pageNo}`);
+        // console.info(`redirect to page: ${pageNo}`);
         let nextUrl;
-        let curUrl = location.href;
-        let search = location.search;
+        const curUrl = location.href;
+        const search = location.search;
 
         if (this.hasPageParam(search)) {
             nextUrl = curUrl.replace(/(page)=\d*/, `$1=${pageNo}`);
@@ -51,61 +51,44 @@ export default class Pagination {
         return /page=/.test(search);
     }
 
-    currentPageNo() {
-        let search = location.search;
-        let pageNo;
-
-        // 没有query，或者有query但没有page参数
-        if (!this.hasPageParam(search)) {
-            pageNo = 1;
-        }
-
-        let matched = search.match(/page=(\d*)/);
-        if (matched && matched[1]) {
-            pageNo = parseInt(matched[1], 10);
-        }
-        else {
-            pageNo = 1;
-        }
-
-        return pageNo;
-    }
-
     onSelectPage(evt) {
-        let selPage = parseInt(evt.target.value, 10);
+        const selPage = parseInt(evt.target.value, 10);
         this.redirect(selPage);
     }
 
     onThumbPage(evt) {
-        let $el = $(evt.target);
-        let action = $el.data('action');
-        // let curPageNo = this.currentPageNo();
-        let curPageNo = this.curPageNo;
+        const $el = $(evt.target);
+        const action = $el.data('action');
+        const curPageNo = this.curPageNo;
 
-        let find = {
-            pre: (cur) => cur <= 1 ? 1 : cur - 1,
+        const find = {
+            previous: (cur) => cur <= 1 ? 1 : cur - 1,
             next: (cur) => cur >= this.totalPage ? this.totalPage : cur + 1,
         };
 
-        if (action === 'pre') {
-            if (curPageNo === 1) return;
-            // 上一页
-            this.redirect(find.pre(curPageNo));
-        }
-        else if (action === 'next') {
-            if (curPageNo === this.totalPage) return;
-            // 下一页
-            this.redirect(find.next(curPageNo));
-        }
-        else if (action === 'first') {
-            if (curPageNo === 1) return;
-            // 第一页
-            this.redirect(1);
-        }
-        else if (action === 'last') {
-            if (curPageNo === this.totalPage) return;
-            // 最后页
-            this.redirect(this.totalPage);
-        }
+        const pageAction = {
+            previous:() => {
+                if (curPageNo === 1) return;
+                // 上一页
+                this.redirect(find.previous(curPageNo));
+            },
+            next: () => {
+                if (curPageNo === this.totalPage) return;
+                // 下一页
+                this.redirect(find.next(curPageNo));
+            },
+            first: () => {
+                if (curPageNo === 1) return;
+                // 第一页
+                this.redirect(1);
+            },
+            last: () => {
+                if (curPageNo === this.totalPage) return;
+                // 最后页
+                this.redirect(this.totalPage);
+            }
+        };
+
+        pageAction[action]();
     }
 }
