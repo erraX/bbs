@@ -30,7 +30,7 @@ index.get('/topic/:tid', async (req, res, next) => {
     let title;
     let totalPage;
     let tid = req.params.tid
-    let pageNo = req.query.pageno || 1;
+    let pageNo = req.query.page || 1;
 
     try {
         content = await manager.getTopicDetailById(tid, 'asc', parseInt(pageNo, 10));

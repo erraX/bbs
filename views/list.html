@@ -24,8 +24,7 @@
     </ul>
     <div id="pagination"
       data-total-page="{{ totalPage }}"
-      data-page-no="{{ pageNo }}"
-    >
+      data-page-no="{{ pageNo }}" >
       <select class="page-selector"></select>
       <button class="btn btn-page first" data-action="first">首页</button>
       <button class="btn btn-page pre" data-action="pre">上一页</button>
@@ -37,7 +36,7 @@
   <script src="/dep/require.js"></script>
   <script>
       requirejs.config({
-        baseUrl: './dist/js/',
+        baseUrl: '/dist/js/',
         packages: [
             {
                 name: 'underscore',

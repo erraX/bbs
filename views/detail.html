@@ -26,6 +26,33 @@
         </li>
       {% endfor %}
     </ul>
+    <div id="pagination"
+      data-total-page="{{ totalPage }}"
+      data-page-no="{{ pageNo }}" >
+      <select class="page-selector"></select>
+      <button class="btn btn-page first" data-action="first">首页</button>
+      <button class="btn btn-page pre" data-action="pre">上一页</button>
+      <button class="btn btn-page next" data-action="next">下一页</button>
+      <button class="btn btn-page last" data-action="last">末页</button>
+    </div>
   </div>
+  <script src="/dep/zepto.js"></script>
+  <script src="/dep/require.js"></script>
+  <script>
+      requirejs.config({
+        baseUrl: '/dist/js/',
+        packages: [
+            {
+                name: 'underscore',
+                location: '../../dep/',
+                main: 'underscore-min'
+            }
+        ]
+      });
+
+      require(['detail/init'], function(init) {
+        init.default.start();
+      });
+  </script>
 </body>
 </html>

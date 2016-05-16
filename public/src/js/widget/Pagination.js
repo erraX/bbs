@@ -18,7 +18,8 @@ export default class Pagination {
 
         // 添加页码option
         let options = _.map(util.range(this.totalPage), i => `<option value="${i}">${i}</option>`).join('');
-        this.$sel.append(options)
+        this.$sel
+            .append(options)
             .val(this.curPageNo);
     }
 
@@ -82,19 +83,19 @@ export default class Pagination {
         let curPageNo = this.curPageNo;
 
         let find = {
-            PRE: (cur) => cur <= 1 ? 1 : cur - 1,
-            NEXT: (cur) => cur >= this.totalPage ? this.totalPage : cur + 1
-        }
+            pre: (cur) => cur <= 1 ? 1 : cur - 1,
+            next: (cur) => cur >= this.totalPage ? this.totalPage : cur + 1,
+        };
 
         if (action === 'pre') {
             if (curPageNo === 1) return;
             // 上一页
-            this.redirect(find.PRE(curPageNo));
+            this.redirect(find.pre(curPageNo));
         }
         else if (action === 'next') {
             if (curPageNo === this.totalPage) return;
             // 下一页
-            this.redirect(find.NEXT(curPageNo));
+            this.redirect(find.next(curPageNo));
         }
         else if (action === 'first') {
             if (curPageNo === 1) return;
