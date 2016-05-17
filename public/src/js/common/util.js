@@ -1,15 +1,20 @@
 export default {
     range: x => Array.apply(null, Array(x)).map((_, i) => i + 1),
 
-    getQueryValue(search, name) {
-        let value;
-        let reg = new RegExp(`/${name}=(.*)/`);
+    parseQuery(query) {
+        const reg = /.*\?(.*=.*)/;
 
-        let matched = search.match(reg);
+        let result;
+        let queryArray;
+        let matched = query.match(reg);
+
         if (matched && matched[1]) {
-            value = parseInt(matched[1], 10);
+            queryArray = matched[1].split('&');
         }
 
-        return value;
-    },
+        return _.chain(queryArray)
+                    .map(s => [decodeURI(s.split('=')[0]), decodeURI(s.split('=')[1])])
+                    .object()
+                    .value();
+    }
 }

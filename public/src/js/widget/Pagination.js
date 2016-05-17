@@ -67,7 +67,7 @@ export default class Pagination {
         };
 
         const pageAction = {
-            previous:() => {
+            previous: () => {
                 if (curPageNo === 1) return;
                 // 上一页
                 this.redirect(find.previous(curPageNo));

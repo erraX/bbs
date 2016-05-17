@@ -7,6 +7,6 @@ const logger = log4js.getLogger('normal');
  *
  */
 export default function(req, res, next) {
-    logger.info(req.method, req.originalUrl);
+    logger.info(req.method, req.originalUrl, req.query, req.params);
     next();
 }

@@ -10,6 +10,7 @@ index.get('/', async (req, res, next) => {
     let topics;
     let totalPage;
     let pageNo = req.query.page || 1;
+    let sort = req.query.sort || 'desc';
 
     try {
         topics = await manager.getTopicList('desc', parseInt(pageNo, 10));
@@ -31,6 +32,7 @@ index.get('/topic/:tid', async (req, res, next) => {
     let totalPage;
     let tid = req.params.tid
     let pageNo = req.query.page || 1;
+    let sort = req.query.sort || 'desc';
 
     try {
         content = await manager.getTopicDetailById(tid, 'asc', parseInt(pageNo, 10));
